@@ -1,13 +1,11 @@
 package com.example.app.controller;
 
 import com.example.app.model.User;
-import com.example.app.model.dto.SignupRequest;
 import com.example.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping("/api/users")
@@ -17,19 +15,16 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody SignupRequest user) {
-        String registeredUser = userService.createUser(user);
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+        User registeredUser = userService.registerUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        User userById = userService.getUserById(id);
-        if (userById.getUsername().isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(userById);
-
+        return userService.getUserById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
