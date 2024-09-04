@@ -1,7 +1,7 @@
 INSERT INTO users (username, password)
-VALUES ('Jon Yon', 'jRRfvknfvkf888vl'),
-       ('Lisa Dou', 'rrrfrR78787RRR'),
-       ('Erik Lehnsherr', 'B4r4rlflrllj');
+VALUES ('JonYon', '$2a$12$Aj3GZ4yoTTCoNZRbbbyeJOJYSuf0ncV2JKATFYKdY6i44qn1DSmpG'),
+       ('LisaDou', '$2a$12$Aj3GZ4yoTTCoNZRbbbyeJOJYSuf0ncV2JKATFYKdY6i44qn1DSmpG'),
+       ('ErikLehnsherr', '$2a$12$Aj3GZ4yoTTCoNZRbbbyeJOJYSuf0ncV2JKATFYKdY6i44qn1DSmpG');
 
 INSERT INTO link (full_url, short_url, order_status, user_id, transition_counter)
 VALUES ('https://www.baeldung.com/spring-boot-h2-database', '7ppk09', 'ACTIVE', 1, 0),
