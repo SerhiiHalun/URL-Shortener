@@ -28,3 +28,9 @@ l
 -.idea/sonarlint/securityhotspotstore/index.pb,8\8\88a9255124c95bdc913197c120a8d560edc59c8e
 S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+b
+2src/main/java/com/example/app/service/JwtUtil.java,c\e\cebdb4c5af1c0ce386271e8e2b6ff82bc5bf4d97
+l
+<src/main/java/com/example/app/controller/AuthController.java,3\e\3e5774712ead450ebae18ac182954bcf62f0ca76
+j
+:src/main/java/com/example/app/model/dto/SignupRequest.java,c\c\ccf0bfc5636ef237ef5e43c03778d45ac41d1634

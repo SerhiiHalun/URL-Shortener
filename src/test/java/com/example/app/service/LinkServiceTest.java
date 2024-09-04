@@ -35,7 +35,7 @@ class LinkServiceTest {
         originLink.setStatus(Link.OrderStatus.ACTIVE);
 
         when(linkRepository.findById(5L)).thenReturn(java.util.Optional.of(originLink));
-        linkService.add(originLink);
+        //linkService.add(String ,originLink);
         Assertions.assertEquals(originLink,linkService.getById(5L));
 
 

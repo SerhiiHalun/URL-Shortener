@@ -14,8 +14,8 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class LinkController {
     private final LinkService linkService;
-    @GetMapping("/{userName},{fullUrl}")
-    public String createShortUrl(@PathVariable String userName, @PathVariable String fullUrl){
+    @GetMapping("/create")
+    public String createShortUrl(@RequestParam String userName, @RequestParam String fullUrl){
         return linkService.add(userName,fullUrl);
     }
     @GetMapping("/{id}")
