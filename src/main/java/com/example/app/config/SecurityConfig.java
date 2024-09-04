@@ -3,6 +3,7 @@ package com.example.app.config;
 import lombok.RequiredArgsConstructor;
 import com.example.app.model.User;
 import com.example.app.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

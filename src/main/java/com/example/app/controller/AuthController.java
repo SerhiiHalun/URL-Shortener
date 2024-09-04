@@ -24,8 +24,8 @@ public class AuthController {
 
 
     @PostMapping("/signup")
-    public String signup(@RequestBody SignupRequest signupRequest) {
-        return userService.createUser(signupRequest);
+    public User signup(@RequestBody SignupRequest signupRequest) {
+        return userService.registerUser(signupRequest);
     }
 
     @PostMapping("/auth")
