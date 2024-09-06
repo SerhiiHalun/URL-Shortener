@@ -1,13 +1,12 @@
 package com.example.app.controller;
 
 import com.example.app.model.Link;
-import com.example.app.model.User;
+import com.example.app.model.dto.LinkCreateDTO;
 import com.example.app.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/v1/link")
@@ -15,12 +14,12 @@ import java.time.LocalDate;
 public class LinkController {
     private final LinkService linkService;
     @GetMapping("/create")
-    public String createShortUrl(@RequestParam String userName, @RequestParam String fullUrl){
-        return linkService.add(userName,fullUrl);
+    public String createShortUrl(@RequestBody LinkCreateDTO linkCreateDTO){
+        return linkService.add(linkCreateDTO);
     }
     @GetMapping("/{id}")
     public Link getLinkById(@PathVariable long id) {
-        return linkService.getById(id);
+        return linkService.findById(id);
     }
 
     @GetMapping("/{shortUrl}")
