@@ -1,6 +1,6 @@
 package com.example.app.mapper;
 
-import com.example.app.exceptions.LinkNotFoundException;
+
 import com.example.app.model.Link;
 import com.example.app.model.dto.LinkCreateDTO;
 import com.example.app.service.LinkService;
@@ -16,9 +16,7 @@ public class LinkMapper {
     private final UserService userService;
     private final LinkService linkService;
     public Link LinkCreateDTOToEntity(LinkCreateDTO linkDTO){
-        if(linkService.checkUrlExists(linkDTO.getFullUrl())){
-            throw new LinkNotFoundException(linkDTO.getFullUrl());
-        }
+
         String shorturl = linkService.generateShortUrl();
 
         Link link = Link.builder()

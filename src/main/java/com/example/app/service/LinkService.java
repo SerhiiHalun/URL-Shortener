@@ -26,6 +26,9 @@ public class LinkService {
 
     @Transactional
     public String add(LinkCreateDTO linkCreateDTO)  {
+        if(checkUrlExists(linkCreateDTO.getFullUrl())){
+            throw new LinkNotFoundException(linkCreateDTO.getFullUrl());
+        }
 
         Link link = linkMapper.LinkCreateDTOToEntity(linkCreateDTO);
         repository.save(link);
@@ -83,12 +86,13 @@ public class LinkService {
         return link.getFullUrl();
     }
     @Transactional
-    public void extendLinkValidity(long linkId) {
+    public String extendLinkValidity(long linkId) {
         Link link = findById(linkId);
         link.setCreationDate(LocalDate.now());
         link.setStatus(Link.OrderStatus.ACTIVE);
 
         repository.save(link);
+        return "Link has been successfully extended";
     }
 
     public String generateShortUrl(){

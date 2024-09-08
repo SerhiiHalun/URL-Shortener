@@ -56,4 +56,48 @@ class LinkServiceTest {
     @Test
     void getLinkClickStatistics() {
     }
+
+    @Test
+    void testAdd() {
+    }
+
+    @Test
+    void testDeleteById() {
+    }
+
+    @Test
+    void testUpdate() {
+    }
+
+    @Test
+    void findById() {
+    }
+
+    @Test
+    void testGetLinkClickStatistics() {
+    }
+
+    @Test
+    void getShortLink() {
+    }
+
+    @Test
+    void getFullUrl() {
+    }
+
+    @Test
+    void extendLinkValidity() {
+    }
+
+    @Test
+    void generateShortUrl() {
+    }
+
+    @Test
+    void validateLink() {
+    }
+
+    @Test
+    void checkUrlExists() {
+    }
 }
