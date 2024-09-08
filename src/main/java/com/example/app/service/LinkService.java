@@ -1,7 +1,10 @@
 package com.example.app.service;
 
+import com.example.app.exceptions.LinkDisabledException;
+import com.example.app.exceptions.LinkNotFoundException;
+import com.example.app.mapper.LinkMapper;
 import com.example.app.model.Link;
-import com.example.app.model.User;
+import com.example.app.model.dto.LinkCreateDTO;
 import com.example.app.repository.LinkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,25 +22,17 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LinkService {
     private final LinkRepository repository;
-    private final UserService userService;
+    private final LinkMapper linkMapper;
 
     @Transactional
-    public String add(String userName, String fullUrl)  {
-        if(checkUrlExists(fullUrl)){
-            throw new LinkNotFoundException(fullUrl);
+    public String add(LinkCreateDTO linkCreateDTO)  {
+        if(checkUrlExists(linkCreateDTO.getFullUrl())){
+            throw new LinkNotFoundException(linkCreateDTO.getFullUrl());
         }
-        String shorturl = generateShortUrl();
-        Link link = Link.builder()
-                .creationDate(LocalDate.now())
-                .fullUrl(fullUrl)
-                .shortUrl(shorturl)
-                .transitionCounter(0)
-                .status(Link.OrderStatus.ACTIVE)
-                .user(userService.findByName(userName))
-                .build();
-        validateLink(link);
+
+        Link link = linkMapper.LinkCreateDTOToEntity(linkCreateDTO);
         repository.save(link);
-        return shorturl;
+        return link.getShortUrl();
     }
 
     @Transactional
@@ -60,35 +55,65 @@ public class LinkService {
     }
 
     @Transactional(readOnly = true)
-    public Link getById(long id) {
+    public Link findById(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new LinkNotFoundException(id));
     }
 
     @Transactional(readOnly = true)
     public int getLinkClickStatistics(long id) {
-        return getById(id).getTransitionCounter();
+        return findById(id).getTransitionCounter();
     }
-
 
 
     @Transactional(readOnly = true)
     public String getShortLink(long id) {
-        return getById(id).getShortUrl();
+        return findById(id).getShortUrl();
     }
 
-    private void validateLink(Link link) {
+    @Transactional
+    public String getFullUrl(String shortUrl) {
+        Link link = repository.findByShortUrl(shortUrl)
+                .orElseThrow(() -> new NoSuchElementException("Short URL " + shortUrl + " not found."));
+
+        if (link.getStatus() == Link.OrderStatus.DISABLE) {
+            throw new LinkDisabledException("The link with short URL " + shortUrl + " is disabled.");
+        }
+
+        link.setTransitionCounter(link.getTransitionCounter() + 1);
+        repository.save(link);
+
+        return link.getFullUrl();
+    }
+    @Transactional
+    public String extendLinkValidity(long linkId) {
+        Link link = findById(linkId);
+        link.setCreationDate(LocalDate.now());
+        link.setStatus(Link.OrderStatus.ACTIVE);
+
+        repository.save(link);
+        return "Link has been successfully extended";
+    }
+
+    public String generateShortUrl(){
+        return  "https://shorturl/" + UUID.randomUUID().toString().substring(0, 8);
+    }
+
+    public void validateLink(Link link) {
         if (link == null) {
             throw new IllegalArgumentException("Link must not be null.");
         }
-        if (link.getFullUrl() == null || link.getFullUrl().isEmpty()) {
+        if (link.getFullUrl()== null || link.getFullUrl().isEmpty()) {
             throw new IllegalArgumentException("Full URL must not be null or empty.");
         }
     }
 
-    private boolean checkUrlExists(String urlString) {
+    public boolean checkUrlExists(String fullUrl) {
         try {
-            URL url = new URL(urlString);
+            if (fullUrl == null || fullUrl.isEmpty()) {
+                throw new IllegalArgumentException("Full URL must not be null or empty.");
+            }
+            URL url = new URL(fullUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("HEAD");
             connection.setConnectTimeout(5000);
@@ -101,28 +126,6 @@ public class LinkService {
         } catch (IOException e) {
 
             return false;
-        }
-    }
-    @Transactional
-    public String getFullUrl(String shortUrl) {
-        Link link = repository.findByShortUrl(shortUrl)
-                .orElseThrow(() -> new NoSuchElementException("Short URL " + shortUrl + " not found."));
-        link.setTransitionCounter(link.getTransitionCounter() + 1);
-
-        repository.save(link);
-
-        return link.getFullUrl();
-    }
-
-    public String generateShortUrl(){
-        return  "https://shorturl/" + UUID.randomUUID().toString().substring(0, 8);
-    }
-    public static class LinkNotFoundException extends NoSuchElementException {
-        public LinkNotFoundException(long id) {
-            super("Link with id " + id + " not found.");
-        }
-        public LinkNotFoundException(String URL) {
-            super("Invalid URL " + URL + " not found.");
         }
     }
 
