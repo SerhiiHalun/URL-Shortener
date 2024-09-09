@@ -30,7 +30,7 @@ public class LinkService {
             throw new LinkNotFoundException(linkCreateDTO.getFullUrl());
         }
 
-        Link link = linkMapper.LinkCreateDTOToEntity(linkCreateDTO);
+        Link link = linkMapper.linkCreateDTOToEntity(linkCreateDTO);
         repository.save(link);
         return link.getShortUrl();
     }

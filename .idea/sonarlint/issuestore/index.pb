@@ -54,3 +54,9 @@ h
 8src/test/java/com/example/app/mapper/LinkMapperTest.java,5\b\5bd7b20fcc2ea564fb51687ad2024dc07e7f5bae
 p
 @src/test/java/com/example/app/controller/LinkControllerTest.java,b\e\be3dbb671745e29d200294b53284d3ab5d86af80
+s
+Csrc/main/java/com/example/app/exceptions/UserNotFoundException.java,a\9\a98c3119b045e396fa2e1936d661128cd6a2e55d
+q
+Asrc/main/java/com/example/app/exceptions/ValidationException.java,6\3\63f9be5a6ad1de7f5b4b6eac27d1922d8e195517
+t
+Dsrc/main/java/com/example/app/exceptions/GlobalExceptionHandler.java,6\f\6fd1cc4936ef4cd40015cf1dad61096fb8ecd538

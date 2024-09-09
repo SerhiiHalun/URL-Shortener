@@ -3,7 +3,6 @@ package com.example.app.mapper;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.example.app.mapper.LinkMapper;
 import com.example.app.model.Link;
 import com.example.app.model.User;
 import com.example.app.model.dto.LinkCreateDTO;
@@ -37,7 +36,7 @@ public class LinkMapperTest {
     public void testLinkCreateDTOToEntity() {
         // Arrange
         LinkCreateDTO linkDTO = new LinkCreateDTO();
-        linkDTO.setFullUrl("http://example.com");
+        linkDTO.setFullUrl("https://www.youtube.com");
         linkDTO.setUserName("testUser");
 
         User user = new User();
@@ -46,13 +45,12 @@ public class LinkMapperTest {
         when(linkService.generateShortUrl()).thenReturn("shortUrl");
         when(userService.findByName("testUser")).thenReturn(user);
 
-        // Act
-        Link link = linkMapper.LinkCreateDTOToEntity(linkDTO);
 
-        // Assert
+        Link link = linkMapper.linkCreateDTOToEntity(linkDTO);
+
         assertNotNull(link);
         assertEquals(LocalDate.now(), link.getCreationDate());
-        assertEquals("http://example.com", link.getFullUrl());
+        assertEquals("https://www.youtube.com", link.getFullUrl());
         assertEquals("shortUrl", link.getShortUrl());
         assertEquals(0, link.getTransitionCounter());
         assertEquals(Link.OrderStatus.ACTIVE, link.getStatus());
