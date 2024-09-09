@@ -33,9 +33,19 @@ public class LinkController {
     }
 
 
-    @PostMapping("/extend-link-validity/{id}")
+
+    @PostMapping("/validity/extend/{id}")
     public String extendLinkValidity(@PathVariable long id) {
         linkService.extendLinkValidity(id);
         return "Link validity extended successfully";
+    }
+    @PostMapping("/delete/{id}")
+    public void deleteLink(@PathVariable long id){
+        linkService.deleteById(id);
+
+    }
+    @GetMapping("/statistic/click/{id}")
+    public  int clickStatistic(@PathVariable long id){
+        return  linkService.getLinkClickStatistics(id);
     }
 }
