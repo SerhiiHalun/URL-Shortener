@@ -45,6 +45,7 @@ class LinkServiceTest {
         Link link = new Link();
         link.setShortUrl("abc123");
 
+<<<<<<< Updated upstream
         when(linkMapper.LinkCreateDTOToEntity(any(LinkCreateDTO.class))).thenReturn(link);
         when(linkRepository.save(any(Link.class))).thenReturn(link);
 
@@ -53,6 +54,14 @@ class LinkServiceTest {
         assertNotNull(shortUrl);
         assertEquals("abc123", shortUrl);
         verify(linkRepository, times(1)).save(link);
+=======
+        when(linkRepository.findById(5L)).thenReturn(java.util.Optional.of(originLink));
+        //linkService.add(String ,originLink);
+        Assertions.assertEquals(originLink,linkService.findById(5L));
+    }
+    @Test
+    void add() {
+>>>>>>> Stashed changes
     }
 
     @Test
@@ -196,10 +205,16 @@ class LinkServiceTest {
         Link link = new Link();
         link.setFullUrl("");
 
+<<<<<<< Updated upstream
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             linkService.validateLink(link);
         });
 
         assertEquals("Full URL must not be null or empty.", exception.getMessage());
+=======
+    @Test
+    void checkUrlExists() {
+        linkService.checkUrlExists("")
+>>>>>>> Stashed changes
     }
 }
