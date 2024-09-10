@@ -3,7 +3,6 @@ package com.example.app.config;
 import lombok.RequiredArgsConstructor;
 import com.example.app.model.User;
 import com.example.app.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
@@ -38,11 +36,12 @@ public class SecurityConfig {
                         .disable())
                 .authorizeHttpRequests(request ->
                         request
-//                                .requestMatchers("/auth", "/signup").permitAll()
-//                                .requestMatchers("swagger-ui.html", "/swagger-resources/**", "/api-docs/**", "/swagger-ui/**","/h2-console/**").permitAll()
-//                                .requestMatchers("/api/v1/link/**").authenticated()
+                                .requestMatchers("/api/v1/users/auth", "/api/v1/users/signup").permitAll()
+                                .requestMatchers("swagger-ui.html", "/swagger-resources/**", "/api-docs/**", "/swagger-ui/**","/h2-console/**").permitAll()
+                                .requestMatchers("/api/v1/link/**").hasRole("USER")
+                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                                 .requestMatchers(toH2Console()).permitAll()
-                                .anyRequest().permitAll())
+                                .anyRequest().authenticated())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
@@ -64,6 +63,9 @@ public class SecurityConfig {
             User user = userService.findByName(username);
             return org.springframework.security.core.userdetails.User.withUsername(username)
                     .password(user.getPassword())
+                    .authorities(user.getRoles().stream()
+                            .map(role -> new SimpleGrantedAuthority(role.getName()))
+                            .toList())
                     .build();
         };
     }

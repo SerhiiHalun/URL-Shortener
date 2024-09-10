@@ -16,7 +16,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -87,9 +86,6 @@ public class LinkService {
         return "Link has been successfully extended";
     }
 
-    public String generateShortUrl(){
-        return  "https://shorturl/" + UUID.randomUUID().toString().substring(0, 8);
-    }
 
     public void validateLink(Link link) {
         if (link == null) {
