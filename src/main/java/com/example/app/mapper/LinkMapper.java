@@ -15,9 +15,11 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class LinkMapper {
     private final UserService userService;
+
     private final LinkUtil linkUtil;
 
     public Link linkCreateDTOToEntity(LinkCreateDTO linkDTO){
+
 
         String shorturl = linkUtil.generateShortUrl();
 

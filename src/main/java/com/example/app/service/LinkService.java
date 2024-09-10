@@ -25,7 +25,7 @@ public class LinkService {
 
     @Transactional
     public String add(LinkCreateDTO linkCreateDTO)  {
-        if(checkUrlExists(linkCreateDTO.getFullUrl())){
+        if(!checkUrlExists(linkCreateDTO.getFullUrl())){
             throw new LinkNotFoundException(linkCreateDTO.getFullUrl());
         }
 
@@ -43,15 +43,7 @@ public class LinkService {
         return true;
     }
 
-    @Transactional
-    public boolean update(Link link) {
-        validateLink(link);
-        if (!repository.existsById(link.getId())) {
-            throw new LinkNotFoundException(link.getId());
-        }
-        repository.save(link);
-        return true;
-    }
+
 
     @Transactional(readOnly = true)
     public Link findById(long id) {
@@ -124,5 +116,6 @@ public class LinkService {
             return false;
         }
     }
+
 
 }
