@@ -7,6 +7,7 @@ import com.example.app.model.Link;
 import com.example.app.model.User;
 import com.example.app.model.dto.LinkCreateDTO;
 import com.example.app.service.LinkService;
+import com.example.app.service.LinkUtil;
 import com.example.app.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ public class LinkMapperTest {
     private UserService userService;
 
     @Mock
-    private LinkService linkService;
+    private LinkUtil linkUtil;
 
     @InjectMocks
     private LinkMapper linkMapper;
@@ -42,7 +43,7 @@ public class LinkMapperTest {
         User user = new User();
         user.setUsername("testUser");
 
-        when(linkService.generateShortUrl()).thenReturn("shortUrl");
+        when(linkUtil.generateShortUrl()).thenReturn("shortUrl");
         when(userService.findByName("testUser")).thenReturn(user);
 
 
@@ -56,7 +57,7 @@ public class LinkMapperTest {
         assertEquals(Link.OrderStatus.ACTIVE, link.getStatus());
         assertEquals(user, link.getUser());
 
-        verify(linkService).generateShortUrl();
+        verify(linkUtil).generateShortUrl();
         verify(userService).findByName("testUser");
     }
 }
