@@ -6,10 +6,7 @@ import com.example.app.mapper.LinkMapper;
 import com.example.app.model.Link;
 import com.example.app.model.dto.LinkCreateDTO;
 import com.example.app.repository.LinkRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +29,7 @@ public class LinkService {
             throw new LinkNotFoundException(linkCreateDTO.getFullUrl());
         }
 
-        Link link = linkMapper.LinkCreateDTOToEntity(linkCreateDTO);
+        Link link = linkMapper.linkCreateDTOToEntity(linkCreateDTO);
         repository.save(link);
         return link.getShortUrl();
     }
