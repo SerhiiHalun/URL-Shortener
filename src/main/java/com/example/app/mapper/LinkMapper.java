@@ -3,7 +3,8 @@ package com.example.app.mapper;
 
 import com.example.app.model.Link;
 import com.example.app.model.dto.LinkCreateDTO;
-import com.example.app.service.LinkService;
+
+import com.example.app.service.LinkUtil;
 import com.example.app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,12 +15,12 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class LinkMapper {
     private final UserService userService;
-    private final LinkService linkService;
+    private final LinkUtil linkUtil;
     public Link LinkCreateDTOToEntity(LinkCreateDTO linkDTO){
 
-        String shorturl = linkService.generateShortUrl();
+        String shorturl = linkUtil.generateShortUrl();
 
-        Link link = Link.builder()
+        return Link.builder()
                 .creationDate(LocalDate.now())
                 .fullUrl(linkDTO.getFullUrl())
                 .shortUrl(shorturl)
@@ -27,7 +28,6 @@ public class LinkMapper {
                 .status(Link.OrderStatus.ACTIVE)
                 .user(userService.findByName(linkDTO.getUserName()))
                 .build();
-        return link;
     }
 
 }

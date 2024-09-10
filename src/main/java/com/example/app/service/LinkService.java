@@ -6,7 +6,10 @@ import com.example.app.mapper.LinkMapper;
 import com.example.app.model.Link;
 import com.example.app.model.dto.LinkCreateDTO;
 import com.example.app.repository.LinkRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +19,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -95,9 +97,6 @@ public class LinkService {
         return "Link has been successfully extended";
     }
 
-    public String generateShortUrl(){
-        return  "https://shorturl/" + UUID.randomUUID().toString().substring(0, 8);
-    }
 
     public void validateLink(Link link) {
         if (link == null) {

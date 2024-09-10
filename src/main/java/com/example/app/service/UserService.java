@@ -4,6 +4,7 @@ import com.example.app.exceptions.UserNotFoundException;
 import com.example.app.exceptions.ValidationException;
 import com.example.app.model.User;
 import com.example.app.model.dto.SignupRequest;
+import com.example.app.repository.RoleRepository;
 import com.example.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,12 +17,15 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    public User registerUser(SignupRequest user) {
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+    private final RoleRepository roleRepository;
+    public User registerUser(SignupRequest newUser) {
+        if (userRepository.existsByUsername(newUser.getUsername())) {
             throw new ValidationException("Username already exists.");
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User user = new User();
+        user.setUsername(newUser.getUsername());
+        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        roleRepository.findByName("ROLE_USER").ifPresent(user::addRole);
         return userRepository.save(user);
     }
 
@@ -30,15 +34,6 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(username));
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
-    }
-
-    public User updateUser(User user) {
-
-        return userRepository.save(user);
-    }
 
     public void deleteUser(Long id) {
         userRepository.findById(id)

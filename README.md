@@ -17,6 +17,8 @@ The application uses environment variables for database configuration. Ensure th
 - `DB_URL` - The JDBC URL for your PostgreSQL database.
 - `DB_USERNAME` - The username for your PostgreSQL database.
 - `DB_PASSWORD` - The password for your PostgreSQL database.
+- `JWT_SECRET` - Secret to you JWT token
+- `JWT_EXPIRATION` - Lifecycle you JWT token in millisecond
 
 ### Run the Application
 
