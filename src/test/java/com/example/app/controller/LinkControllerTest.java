@@ -13,9 +13,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.servlet.view.RedirectView;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 public class LinkControllerTest {
+    private MockMvc mockMvc;
 
     @Mock
     private LinkService linkService;
@@ -29,6 +37,7 @@ public class LinkControllerTest {
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(linkController).build();
     }
 
     @Test
@@ -84,4 +93,34 @@ public class LinkControllerTest {
         assertEquals("Link validity extended successfully", result);
         verify(linkService).extendLinkValidity(id);
     }
+    @Test
+    void testDeleteLink() throws Exception {
+
+        when(linkService.deleteById(1L)).thenReturn(true);
+
+
+        mockMvc.perform(delete("/api/v1/link/delete/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+
+        verify(linkService).deleteById(1L);
+    }
+
+
+
+    @Test
+    void testClickStatistic() throws Exception {
+
+        when(linkService.getLinkClickStatistics(1L)).thenReturn(10);
+
+
+        mockMvc.perform(get("/api/v1/link/statistic/click/1")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().string("10"));
+
+        verify(linkService).getLinkClickStatistics(1L);
+    }
+
 }

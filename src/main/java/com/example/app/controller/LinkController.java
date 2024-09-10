@@ -39,7 +39,7 @@ public class LinkController {
         linkService.extendLinkValidity(id);
         return "Link validity extended successfully";
     }
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteLink(@PathVariable long id){
         linkService.deleteById(id);
 

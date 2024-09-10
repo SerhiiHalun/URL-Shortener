@@ -18,8 +18,6 @@ j
 :src/main/java/com/example/app/UrlShortenerApplication.java,f\7\f7b514fa58cd45484e402119a4798a78e06c25e6
 l
 <src/main/java/com/example/app/controller/UserController.java,e\a\ea615d33051ca2f217e19aa1e17d8ab66f6b480c
-o
-?src/test/java/com/example/app/UrlShortenerApplicationTests.java,d\8\d8d03cd20c535db5ff852facc2568821e7377cc0
 j
 :src/test/java/com/example/app/service/LinkServiceTest.java,6\b\6b566f71582fc199958ec993e9f550fb75e6e3ca
 l
@@ -60,3 +58,7 @@ q
 Asrc/main/java/com/example/app/exceptions/ValidationException.java,6\3\63f9be5a6ad1de7f5b4b6eac27d1922d8e195517
 t
 Dsrc/main/java/com/example/app/exceptions/GlobalExceptionHandler.java,6\f\6fd1cc4936ef4cd40015cf1dad61096fb8ecd538
+c
+3src/main/java/com/example/app/service/LinkUtil.java,d\d\dd8dc3e78f7daa4dd97e8aeba7ddc06a0d2131f0
+g
+7src/test/java/com/example/app/service/LinkUtilTest.java,f\c\fc643ad81e474201ee663464f308d7dc0e677672
