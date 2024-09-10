@@ -62,3 +62,9 @@ c
 3src/main/java/com/example/app/service/LinkUtil.java,d\d\dd8dc3e78f7daa4dd97e8aeba7ddc06a0d2131f0
 g
 7src/test/java/com/example/app/service/LinkUtilTest.java,f\c\fc643ad81e474201ee663464f308d7dc0e677672
+q
+Asrc/test/java/com/example/app/controller/AdminControllerTest.java,7\1\718dc50859affe1028d89f071da624c3206d5528
+p
+@src/test/java/com/example/app/controller/AuthControllerTest.java,7\0\705ad31d358cf16e9b3b427fb45f2ab20bdfd620
+j
+:src/test/java/com/example/app/service/UserServiceTest.java,a\e\ae6349f40dd0ab31e32a7815a713340d88ae916a
