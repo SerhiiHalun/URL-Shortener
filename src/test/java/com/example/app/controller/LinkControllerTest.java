@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import com.example.app.model.Link;
 import com.example.app.model.dto.LinkCreateDTO;
 import com.example.app.service.LinkService;
+import com.example.app.service.LinkUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -21,6 +22,9 @@ public class LinkControllerTest {
 
     @InjectMocks
     private LinkController linkController;
+
+    @Mock
+    private LinkUtil linkUtil;
 
     @BeforeEach
     public void setUp() {
@@ -59,7 +63,7 @@ public class LinkControllerTest {
 
     @Test
     public void testRedirectToFullUrl() {
-        String shortUrl = linkService.generateShortUrl();
+        String shortUrl = linkUtil.generateShortUrl();
         String fullUrl = "https://www.youtube.com/";
 
         when(linkService.getFullUrl(shortUrl)).thenReturn(fullUrl);
