@@ -35,9 +35,7 @@ class UserServiceTest {
     @Test
     void testRegisterUser_UsernameExists() {
 
-        SignupRequest signupRequest = new SignupRequest();
-        signupRequest.setUsername("existingUser");
-        signupRequest.setPassword("password123");
+        SignupRequest signupRequest = new SignupRequest("existingUser","password123");
 
         when(userRepository.existsByUsername("existingUser")).thenReturn(true);
 
