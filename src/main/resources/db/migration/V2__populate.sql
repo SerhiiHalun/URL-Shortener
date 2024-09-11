@@ -9,7 +9,7 @@ VALUES ('https://www.baeldung.com/spring-boot-h2-database', '7ppk09', 'ACTIVE', 
        ('https://jobs.dou.ua/vacancies/?category=Java', 'tgb7yhf', 'ACTIVE', 3, 0),
        ('https://github.com/Prosperro-de/Dev17Final/tree/main/src/main', 'ghfb766', 'ACTIVE', 1, 0),
        ('https://www.h2database.com/html/systemtables.html?highlight=DEFAULT_ON_NULL&search=default%20#information_schema_schemata', 'uhhtu7r4', 'ACTIVE', 1, 0),
-       ('https://www.oracle.com/developer/devlive/', 'cvbt6ju8', 'ACTIVE', 3, 0);
+       ('https://www.oracle.com/developer/devlive/', 'cvbt6ju8', 'DISABLE', 3, 0);
 
 INSERT INTO roles (name)
 VALUES ('ROLE_USER'),

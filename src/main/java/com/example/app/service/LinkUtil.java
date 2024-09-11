@@ -8,7 +8,7 @@ import java.util.UUID;
 public class LinkUtil {
 
     public String generateShortUrl(){
-        return  "https://shorturl/" + UUID.randomUUID().toString().substring(0, 8);
+        return  UUID.randomUUID().toString().substring(0, 8);
     }
 
 }
