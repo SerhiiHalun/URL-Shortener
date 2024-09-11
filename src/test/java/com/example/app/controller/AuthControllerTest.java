@@ -48,20 +48,13 @@ public class AuthControllerTest {
     @Test
     public void testSignup() {
         SignupRequest signupRequest = new SignupRequest("John","password");
-        List<Role> roleList = new ArrayList<>();
-        roleList.add(Role.builder().name("ROLE_USER").build());
-        User expectedUser = User.builder()
-                .id(1L)
-                .username("John")
-                .password("password")
-                .roles(roleList)
-                .build();
+        String correctResponse = "User with username ' " + "John" + " ' created!";
 
-        when(userService.registerUser(signupRequest)).thenReturn(expectedUser);
+        when(userService.registerUser(signupRequest)).thenReturn(correctResponse);
 
-        User actualUser = authController.signup(signupRequest);
+        String actualUser = authController.signup(signupRequest);
 
-        assertEquals(expectedUser, actualUser);
+        assertEquals(correctResponse, actualUser);
         verify(userService).registerUser(signupRequest);
     }
 
