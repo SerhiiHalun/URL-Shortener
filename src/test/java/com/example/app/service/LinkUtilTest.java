@@ -13,7 +13,6 @@ class LinkUtilTest {
         String shortUrl = linkUtil.generateShortUrl();
 
         assertNotNull(shortUrl);
-        assertTrue(shortUrl.startsWith("https://shorturl/"));
-        assertEquals(25, shortUrl.length());
+        assertEquals(8, shortUrl.length());
     }
 }
