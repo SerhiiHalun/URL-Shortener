@@ -19,7 +19,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-    public User registerUser(SignupRequest newUser) {
+    public String registerUser(SignupRequest newUser) {
         if (userRepository.existsByUsername(newUser.getUsername())) {
             throw new ValidationException("Username already exists.");
         }
@@ -27,7 +27,8 @@ public class UserService {
         user.setUsername(newUser.getUsername());
         user.setPassword(passwordEncoder.encode(newUser.getPassword()));
         roleRepository.findByName("ROLE_USER").ifPresent(user::addRole);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return "User with username ' " + user.getUsername() + " ' created!";
     }
 
     @Cacheable("users")

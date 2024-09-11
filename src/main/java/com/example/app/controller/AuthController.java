@@ -44,7 +44,7 @@ public class AuthController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = String.class)))
     })
-    public User signup(@RequestBody SignupRequest signupRequest) {
+    public String signup(@RequestBody SignupRequest signupRequest) {
         return userService.registerUser(signupRequest);
     }
 
