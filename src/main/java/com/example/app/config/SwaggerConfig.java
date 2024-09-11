@@ -22,28 +22,4 @@ public class SwaggerConfig {
                                         .bearerFormat("JWT")
                                         .scheme("bearer")));
     }
-
-//    @Bean
-//    public GroupedOpenApi publicApi() {
-//        return GroupedOpenApi.builder()
-//                .group("Public API")
-//                .pathsToExclude("/api/**")
-//                .build();
-//    }
-
-//    @Bean
-//    public GroupedOpenApi userApi() {
-//        return GroupedOpenApi.builder()
-//                .group("User API")
-//                .pathsToExclude("/api/v1/admin/**")
-//                .build();
-//    }
-
-//    @Bean
-//    public GroupedOpenApi adminApi() {
-//        return GroupedOpenApi.builder()
-//                .group("Admin API")
-//                .pathsToMatch("/api/v1/admin/**")
-//                .build();
-//    }
 }
