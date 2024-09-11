@@ -7,6 +7,7 @@ import com.example.app.model.Link;
 import com.example.app.model.dto.LinkCreateDTO;
 import com.example.app.repository.LinkRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,7 @@ public class LinkService {
 
 
     @Transactional(readOnly = true)
+    @Cacheable("links")
     public Link findById(long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new LinkNotFoundException(id));
@@ -58,11 +60,13 @@ public class LinkService {
 
 
     @Transactional(readOnly = true)
+    @Cacheable("shortLinks")
     public String getShortLink(long id) {
         return findById(id).getShortUrl();
     }
 
     @Transactional
+    @Cacheable("fullUrl")
     public String getFullUrl(String shortUrl) {
         Link link = repository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new NoSuchElementException("Short URL " + shortUrl + " not found."));

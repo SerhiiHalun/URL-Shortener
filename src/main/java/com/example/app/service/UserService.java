@@ -7,6 +7,7 @@ import com.example.app.model.dto.SignupRequest;
 import com.example.app.repository.RoleRepository;
 import com.example.app.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Cacheable("users")
     public User findByName(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException(username));
