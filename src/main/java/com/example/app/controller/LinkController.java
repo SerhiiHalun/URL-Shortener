@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -49,13 +50,13 @@ public class LinkController {
     @GetMapping("/redirect/{shortUrl}")
     @Operation(summary = "Редірект на повну URL", description = "Перенаправляє користувача на повне посилання на основі короткого URL")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Перенаправлення на повну URL"),
+            @ApiResponse(responseCode = "301", description = "Перенаправлення на повну URL"),
             @ApiResponse(responseCode = "404", description = "Коротке посилання не знайдено", content = @Content(mediaType = "application/json",
                     schema = @Schema(implementation = String.class)))
     })
-    public RedirectView redirectToFullUrl(@PathVariable String shortUrl) {
-        String fullUrl = linkService.getFullUrl(shortUrl);
-        return new RedirectView(fullUrl);
+    @ResponseStatus(code = HttpStatus.MOVED_PERMANENTLY)
+    public String redirectToFullUrl(@PathVariable String shortUrl) {
+        return linkService.getFullUrl(shortUrl);
     }
 
 

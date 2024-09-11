@@ -77,10 +77,10 @@ public class LinkControllerTest {
 
         when(linkService.getFullUrl(shortUrl)).thenReturn(fullUrl);
 
-        RedirectView result = linkController.redirectToFullUrl(shortUrl);
+        String result = linkController.redirectToFullUrl(shortUrl);
 
         assertNotNull(result);
-        assertEquals(fullUrl, result.getUrl());
+        assertEquals(fullUrl, result);
         verify(linkService).getFullUrl(shortUrl);
     }
 
