@@ -25,12 +25,13 @@ public class LinkService {
     private final LinkMapper linkMapper;
 
     @Transactional
-    public String add(LinkCreateDTO linkCreateDTO)  {
+    public String add(String tokenJWT,LinkCreateDTO linkCreateDTO)  {
         if(!checkUrlExists(linkCreateDTO.getFullUrl())){
             throw new LinkNotFoundException(linkCreateDTO.getFullUrl());
         }
+        String token = tokenJWT.startsWith("Bearer ") ? tokenJWT.substring(7) : tokenJWT;
 
-        Link link = linkMapper.linkCreateDTOToEntity(linkCreateDTO);
+        Link link = linkMapper.linkCreateDTOToEntity(token,linkCreateDTO);
         repository.save(link);
         return link.getShortUrl();
     }

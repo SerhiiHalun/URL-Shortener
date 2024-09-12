@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.example.app.model.Link;
 import com.example.app.model.User;
 import com.example.app.model.dto.LinkCreateDTO;
+import com.example.app.service.JwtUtil;
 import com.example.app.service.LinkService;
 import com.example.app.service.LinkUtil;
 import com.example.app.service.UserService;
@@ -23,6 +24,9 @@ public class LinkMapperTest {
     private UserService userService;
 
     @Mock
+    private JwtUtil jwtUtil;
+
+    @Mock
     private LinkUtil linkUtil;
 
     @InjectMocks
@@ -35,29 +39,37 @@ public class LinkMapperTest {
 
     @Test
     public void testLinkCreateDTOToEntity() {
-        // Arrange
+        String token = "Bearer testToken";
+        String username = "testUser";
+        String fullUrl = "https://www.youtube.com";
+        String shortUrl = "shortUrl";
+
+
         LinkCreateDTO linkDTO = new LinkCreateDTO();
-        linkDTO.setFullUrl("https://www.youtube.com");
-        linkDTO.setUserName("testUser");
+        linkDTO.setFullUrl(fullUrl);
 
         User user = new User();
-        user.setUsername("testUser");
+        user.setUsername(username);
 
-        when(linkUtil.generateShortUrl()).thenReturn("shortUrl");
-        when(userService.findByName("testUser")).thenReturn(user);
+        when(linkUtil.generateShortUrl()).thenReturn(shortUrl);
+        when(jwtUtil.extractUsername(token)).thenReturn(username);
+        when(userService.findByName(username)).thenReturn(user);
 
 
-        Link link = linkMapper.linkCreateDTOToEntity(linkDTO);
+        Link link = linkMapper.linkCreateDTOToEntity(token, linkDTO);
+
 
         assertNotNull(link);
         assertEquals(LocalDate.now(), link.getCreationDate());
-        assertEquals("https://www.youtube.com", link.getFullUrl());
-        assertEquals("shortUrl", link.getShortUrl());
+        assertEquals(fullUrl, link.getFullUrl());
+        assertEquals(shortUrl, link.getShortUrl());
         assertEquals(0, link.getTransitionCounter());
         assertEquals(Link.OrderStatus.ACTIVE, link.getStatus());
         assertEquals(user, link.getUser());
 
+
         verify(linkUtil).generateShortUrl();
-        verify(userService).findByName("testUser");
+        verify(jwtUtil).extractUsername(token);
+        verify(userService).findByName(username);
     }
 }

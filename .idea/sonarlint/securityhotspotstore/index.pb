@@ -16,8 +16,6 @@ f
 6src/main/java/com/example/app/service/LinkService.java,0\9\098f5d176cb55959754e646b0a986fc2f1dd7b72
 j
 :src/main/java/com/example/app/UrlShortenerApplication.java,f\7\f7b514fa58cd45484e402119a4798a78e06c25e6
-l
-<src/main/java/com/example/app/controller/UserController.java,e\a\ea615d33051ca2f217e19aa1e17d8ab66f6b480c
 j
 :src/test/java/com/example/app/service/LinkServiceTest.java,6\b\6b566f71582fc199958ec993e9f550fb75e6e3ca
 l
@@ -68,3 +66,5 @@ p
 @src/test/java/com/example/app/controller/AuthControllerTest.java,7\0\705ad31d358cf16e9b3b427fb45f2ab20bdfd620
 j
 :src/test/java/com/example/app/service/UserServiceTest.java,a\e\ae6349f40dd0ab31e32a7815a713340d88ae916a
+m
+=src/main/java/com/example/app/controller/AdminController.java,3\9\39f8d297223f580368a359c616623f70a3f68bf5

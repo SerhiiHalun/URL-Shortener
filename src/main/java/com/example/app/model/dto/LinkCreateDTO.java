@@ -10,5 +10,4 @@ import lombok.Setter;
 @Setter
 public class LinkCreateDTO {
     private String fullUrl;
-    private String userName;
 }

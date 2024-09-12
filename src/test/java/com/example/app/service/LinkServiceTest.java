@@ -42,21 +42,23 @@ class LinkServiceTest {
     @Test
     void testAddLink() {
 
+        String tokenJWT = "Bearer testToken";
         LinkCreateDTO dto = new LinkCreateDTO();
         dto.setFullUrl("https://www.youtube.com");
-        dto.setUserName("JohnDoe");
 
         Link link = new Link();
         link.setShortUrl("abc123");
 
-        when(linkMapper.linkCreateDTOToEntity(any(LinkCreateDTO.class))).thenReturn(link);
+        when(linkMapper.linkCreateDTOToEntity(anyString(), any(LinkCreateDTO.class))).thenReturn(link);
         when(linkRepository.save(any(Link.class))).thenReturn(link);
 
-        String shortUrl = linkService.add(dto);
+        String shortUrl = linkService.add(tokenJWT, dto);
 
         assertNotNull(shortUrl);
         assertEquals("abc123", shortUrl);
         verify(linkRepository, times(1)).save(link);
+        verify(linkMapper, times(1)).linkCreateDTOToEntity(anyString(), any(LinkCreateDTO.class));
+
     }
 
 

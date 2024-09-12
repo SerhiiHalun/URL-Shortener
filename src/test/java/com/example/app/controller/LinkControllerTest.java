@@ -42,16 +42,19 @@ public class LinkControllerTest {
 
     @Test
     public void testCreateShortUrl() {
+        String tokenJWT = "Bearer testToken";
         LinkCreateDTO linkCreateDTO = new LinkCreateDTO();
         linkCreateDTO.setFullUrl("https://www.youtube.com");
-        linkCreateDTO.setUserName("testUser");
 
-        when(linkService.add(linkCreateDTO)).thenReturn("shortUrl");
 
-        String result = linkController.createShortUrl(linkCreateDTO);
+        when(linkService.add(tokenJWT, linkCreateDTO)).thenReturn("shortUrl");
+
+
+        String result = linkController.createShortUrl(tokenJWT, linkCreateDTO);
+
 
         assertEquals("shortUrl", result);
-        verify(linkService).add(linkCreateDTO);
+        verify(linkService).add(tokenJWT, linkCreateDTO);
     }
 
     @Test

@@ -30,8 +30,9 @@ public class LinkController {
             @ApiResponse(responseCode = "200", description = "Коротке посилання успішно створено"),
             @ApiResponse(responseCode = "400", description = "Невірні дані для створення посилання")
     })
-    public String createShortUrl(@RequestBody LinkCreateDTO linkCreateDTO) {
-        return linkService.add(linkCreateDTO);
+    public String createShortUrl(@RequestHeader("Authorization")String tokenJWT,
+                                 @RequestBody LinkCreateDTO linkCreateDTO) {
+        return linkService.add(tokenJWT,linkCreateDTO);
     }
 
 
