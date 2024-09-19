@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -23,6 +24,8 @@ import java.util.NoSuchElementException;
 public class LinkService {
     private final LinkRepository repository;
     private final LinkMapper linkMapper;
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
 
     @Transactional
     public String add(String tokenJWT,LinkCreateDTO linkCreateDTO)  {
@@ -91,7 +94,12 @@ public class LinkService {
         return "Link has been successfully extended";
     }
 
+    @Transactional
+    public List<Link> getUserLinks(String tokenJWT){
+        String token = tokenJWT.startsWith("Bearer ") ? tokenJWT.substring(7) : tokenJWT;
 
+        return repository.findLinksByUserId(userService.findByName(jwtUtil.extractUsername(token)).getId());
+    }
     public void validateLink(Link link) {
         if (link == null) {
             throw new IllegalArgumentException("Link must not be null.");

@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface LinkRepository extends JpaRepository<Link,Long> {
     Optional<Link> findByShortUrl(String shortUrl);
     List<Link> findAllByStatus(Link.OrderStatus status);
+    List<Link> findLinksByUserId(Long userId);
 }

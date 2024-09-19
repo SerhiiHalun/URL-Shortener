@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -60,8 +61,6 @@ public class LinkController {
         return linkService.getFullUrl(shortUrl);
     }
 
-
-
     @PostMapping("/validity/extend/{id}")
     @Operation(summary = "Подовження терміну дії посилання", description = "Подовжує термін дії існуючого короткого URL")
     @ApiResponses(value = {
@@ -92,5 +91,18 @@ public class LinkController {
     })
     public  int clickStatistic(@PathVariable long id){
         return  linkService.getLinkClickStatistics(id);
+    }
+
+
+    @GetMapping("/user/list")
+    @Operation(summary = "Отримання створених користувачем посилання", description = "Повертає всі посилання які створив користуач за його Jwt токеном ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Лист посилань успішно отриман",  content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Integer.class))),
+            @ApiResponse(responseCode = "404", description = "Створених посилань не знайдено", content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = String.class)))
+    })
+    public List<Link> userLinks (@RequestHeader("Authorization")String tokenJWT){
+        return linkService.getUserLinks(tokenJWT);
     }
 }

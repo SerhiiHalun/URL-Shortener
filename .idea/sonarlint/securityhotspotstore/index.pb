@@ -68,3 +68,13 @@ j
 :src/test/java/com/example/app/service/UserServiceTest.java,a\e\ae6349f40dd0ab31e32a7815a713340d88ae916a
 m
 =src/main/java/com/example/app/controller/AdminController.java,3\9\39f8d297223f580368a359c616623f70a3f68bf5
+j
+:src/main/java/com/example/app/config/JwtRequestFilter.java,e\f\effedbf26c607e5c49a1fccab0bad3a4ae7b27da
+h
+8src/main/java/com/example/app/config/SecurityConfig.java,5\1\51cfa8499b6f7af7eaf97b3ecd5f094e628ba537
+g
+7src/main/java/com/example/app/config/SwaggerConfig.java,2\f\2ff0f27728dde60dc193494d8c3fe41299d61a4f
+l
+<src/main/java/com/example/app/repository/UserRepository.java,f\d\fd814113aa2f4a2d430ca919a5e9f49ab5646199
+l
+<src/main/java/com/example/app/repository/RoleRepository.java,c\9\c9082778b471d814d5243a7e56fc49b35ed0da30
